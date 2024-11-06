@@ -1,3 +1,6 @@
+
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -10,13 +13,37 @@
  */
 public class CekNomorGenapGanjilFrame extends javax.swing.JFrame {
 
-    /**
-     * Creates new form CekNomorGenapGanjilFrame
-     */
+  
     public CekNomorGenapGanjilFrame() {
         initComponents();
+        // Kosongkan JTextField saat mendapat fokus
+        inputTextField.addFocusListener(new java.awt.event.FocusListener() {
+            @Override
+            public void focusGained(java.awt.event.FocusEvent e) {
+                inputTextField.setText("");  // Kosongkan teks saat fokus
+            }
+
+            @Override
+            public void focusLost(java.awt.event.FocusEvent e) {
+                // Tidak ada aksi saat kehilangan fokus
+            }
+        });
     }
 
+     // Fungsi untuk mengecek apakah angka adalah bilangan prima
+    private boolean isPrime(int number) {
+        if (number <= 1) return false;
+        for (int i = 2; i <= Math.sqrt(number); i++) {
+            if (number % i == 0) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -30,9 +57,9 @@ public class CekNomorGenapGanjilFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        hasilLabel = new javax.swing.JLabel();
+        inputTextField = new javax.swing.JTextField();
+        cekButton = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -49,17 +76,30 @@ public class CekNomorGenapGanjilFrame extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Aplikasi Cek Nomor Genap Ganjil");
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel2.setText("Masukkan Angka");
 
-        jLabel5.setText("Tampilkan Hasil");
+        hasilLabel.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        hasilLabel.setText("Hasil");
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        inputTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                inputTextFieldActionPerformed(evt);
+            }
+        });
+        inputTextField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                inputTextFieldKeyTyped(evt);
             }
         });
 
-        jButton2.setText("Cek");
+        cekButton.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        cekButton.setText("Cek");
+        cekButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cekButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -73,14 +113,14 @@ public class CekNomorGenapGanjilFrame extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(103, 103, 103)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(hasilLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(62, 62, 62)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(144, Short.MAX_VALUE))
+                                    .addComponent(cekButton, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(inputTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,12 +130,12 @@ public class CekNomorGenapGanjilFrame extends javax.swing.JFrame {
                 .addGap(78, 78, 78)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(inputTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(77, 77, 77))
+                .addComponent(cekButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(hasilLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(59, 59, 59))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -112,13 +152,56 @@ public class CekNomorGenapGanjilFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    private void inputTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inputTextFieldActionPerformed
+       // Kosongkan JTextField saat fokus, bisa dihapus jika tidak diperlukan
+        // inputTextField.setText("");  // Ini bisa dihapus jika menggunakan FocusListener
+    }//GEN-LAST:event_inputTextFieldActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void cekButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cekButtonActionPerformed
+ try {
+            // Ambil angka dari inputTextField dan konversi ke integer
+            int angka = Integer.parseInt(inputTextField.getText().trim());
+
+            // Variabel untuk menyimpan hasil pengecekan
+            String hasil = "";
+
+            // Cek apakah angka genap atau ganjil
+            if (angka % 2 == 0) {
+                hasil = "Angka genap";
+            } else {
+                hasil = "Angka ganjil";
+            }
+
+            // Cek apakah angka bilangan prima
+            if (isPrime(angka)) {
+                hasil += " dan bilangan prima";
+            }
+
+            // Tampilkan hasil di JLabel
+            hasilLabel.setText(hasil);
+
+            // Tampilkan hasil dalam dialog JOptionPane
+            JOptionPane.showMessageDialog(null, hasil, "Hasil", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NumberFormatException ex) {
+            // Tampilkan pesan error jika input bukan angka
+            JOptionPane.showMessageDialog(null, "Masukkan angka yang valid!", "Error", JOptionPane.ERROR_MESSAGE);
+            inputTextField.setText("");  // Kosongkan JTextField setelah error
+        }
+    
+    }//GEN-LAST:event_cekButtonActionPerformed
+
+    private void inputTextFieldKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_inputTextFieldKeyTyped
+       char c = evt.getKeyChar();
+        // Cek jika karakter bukan angka, maka abaikan inputnya
+        if (!Character.isDigit(c)) {
+            evt.consume();  // Abaikan input selain angka
+        }
+
+    }//GEN-LAST:event_inputTextFieldKeyTyped
 
     /**
      * @param args the command line arguments
@@ -156,12 +239,12 @@ public class CekNomorGenapGanjilFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cekButton;
+    private javax.swing.JLabel hasilLabel;
+    private javax.swing.JTextField inputTextField;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
